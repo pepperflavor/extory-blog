@@ -35,25 +35,39 @@ export default function PostsList() {
     console.log(selectCate);
     const fetchData = async () => {
       try {
-        let data;
-        if (selectCate === "전체") {
-          data = await fetchPosts();
-        } else {
-          data = await fetchPosts(1, "", selectCate);
-        }
+        const data = await fetchPosts(
+          1,
+          searchKeyword,
+          selectCate === "전체" ? "" : selectCate
+        );
         setPosts(data.contents);
         setTotalElement(data.totalElements);
       } catch (error) {
         console.error("게시글 갖고오기 실패 : ", error);
       }
+      // try {
+      //   let data;
+      //   if (selectCate === "전체") {
+      //     data = await fetchPosts();
+      //   } else {
+      //     data = await fetchPosts(1, "", selectCate);
+      //   }
+      //   setPosts(data.contents);
+      //   setTotalElement(data.totalElements);
+      // } catch (error) {
+      //   console.error("게시글 갖고오기 실패 : ", error);
+      // }
     };
     fetchData();
-  }, [selectCate]);
+  }, [selectCate, searchKeyword]);
 
   return (
     <div className="flex flex-col w-full space-y-4">
       <Logo />
-      <Header setSelectCate={setSelectCate} setSearchKeyword={setSearchKeyword}/>
+      <Header
+        setSelectCate={setSelectCate}
+        setSearchKeyword={setSearchKeyword}
+      />
 
       <div className="flex w-full h-36  bg-neutral-200/65 rounded-lg items-center justify-center">
         <div className="font-bold text-2xl">BCTO에 대한 모든 이야기</div>

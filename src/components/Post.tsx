@@ -1,4 +1,5 @@
 export default function Post(props) {
+
   return (
     <div className="flex w-full justify-between p-5">
       <div className="flex">

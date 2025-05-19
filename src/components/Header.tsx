@@ -2,18 +2,19 @@ import { useEffect, useState } from "react";
 import SearchBar from "./SearchBar";
 import { fetchCategory } from "../api/post";
 
-// const tabs = ["전체", "BCTO소식", "개발"];
-
 export default function Header({ setSelectCate }) {
   const [cateList, setCatelist] = useState(["전체"]);
   const [activeTab, setActiveTab] = useState("전체");
+  const [cateText, setCateText] = useState<
+    { categoryText: string; category: string }[]
+  >([]);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const data = await fetchCategory();
         const list = data.map((item) => item.categoryText);
-        console.log(list);
+        setCateText(data);
         setCatelist(["전체", ...list]);
       } catch (error) {
         console.error("카테고리 목록 갖고오기 실패 : ", error);
@@ -24,7 +25,15 @@ export default function Header({ setSelectCate }) {
 
   const handleTabClick = (item) => {
     setActiveTab(item);
-    setSelectCate(item);
+    if (item === "전체") {
+      setSelectCate("전체");
+      return;
+    } else {
+      const result = cateText.find(
+        (cate) => cate.categoryText === item
+      )?.category;
+      setSelectCate(result);
+    }
   };
 
   return (

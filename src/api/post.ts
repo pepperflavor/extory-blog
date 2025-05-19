@@ -1,9 +1,9 @@
 import instance from "./axios";
 
-export type Category = {
-  category: string;
-  categoryText: string;
-};
+// export type Category = {
+//   category: string;
+//   categoryText: string;
+// };
 
 export type Post = {
   page?: number;
@@ -20,7 +20,7 @@ export const fetchPosts = async (
     params: {
       page: page ? page : 1,
       search: search ? search : "",
-      category: category ? encodeURIComponent(category) : category,
+      category: category ? encodeURIComponent(category) : "",
     },
   });
   console.log("포스츠 : ");
@@ -33,7 +33,7 @@ export const fetchPosts = async (
 // };
 
 // 모든 카테고리 목록
-export const fetchCategory = async (): Promise<Category[]> => {
+export const fetchCategory = async () => {
   const response = await instance.get("/category");
 
   // console.log("카테고리: ");

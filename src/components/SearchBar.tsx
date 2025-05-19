@@ -1,16 +1,13 @@
 import { useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
 
-export default function SearchBar() {
-  const [keyword, setKeyword] = useState("");
+export default function SearchBar({ setSearchKeyword }) {
   const [isClicked, setIsClicked] = useState(false);
   const [text, setText] = useState("");
+  const [isComposing, setIsComposing] = useState(false);
 
   const inputRef = useRef(null);
-  const navigate = useNavigate();
 
   function changeSearchText(e) {
-    setKeyword(e.target.value);
     setText(e.target.value);
   }
 
@@ -18,17 +15,14 @@ export default function SearchBar() {
     setText("");
     setIsClicked(false);
     inputRef.current?.blur(); // 누르는 시점에 변경되게
+    setSearchKeyword(""); // 검색어 초기화
   }
 
   function handleEnter(e) {
-    if (e.key === "Enter" && text.trim() !== "") {
-      navigate(`/search?keyword=${text.trim()}`);
-      inputRef.current?.blur();
-    }
-  }
-  function handleSearchClick() {
-    if (text.trim() !== "") {
-      navigate(`/search?keyword=${text.trim()}`);
+    console.log("핸들엔터 안 : ");
+    if (e.key === "Enter" && !isComposing && text.trim() !== "") {
+      console.log("검색어 전송 전 확인 : ", text.trim());
+      setSearchKeyword(text.trim());
       inputRef.current?.blur();
     }
   }
@@ -40,6 +34,8 @@ export default function SearchBar() {
         type="text"
         value={text}
         onKeyDown={handleEnter}
+        onCompositionStart={() => setIsComposing(true)} // 한글보다 엔터이벤트 먼저 처리되는 것 방지
+        onCompositionEnd={() => setIsComposing(false)}
         className="w-full pr-10 border-0 font-medium
          text-neutral-700 border-b-2
           border-gray-800 focus:outline-none
@@ -57,7 +53,7 @@ export default function SearchBar() {
         className={`absolute right-2 top-1/2 -translate-y-1/2
           ${isClicked ? "text-green-500" : "text-neutral-500"}`}
         type="button"
-        onClick={text ? handleSearchClick : clearInput}
+        onClick={clearInput}
       >
         {text ? (
           <svg

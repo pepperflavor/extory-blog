@@ -11,6 +11,9 @@ export default function PostsList() {
   const [loading, setLoading] = useState(false);
   const [totalElement, setTotalElement] = useState(0);
 
+  // 검색 했는지 안했는지
+  const [searchKeyword, setSearchKeyword] = useState("");
+
   useEffect(() => {
     const fetchData = async () => {
       setLoading(true);
@@ -50,11 +53,12 @@ export default function PostsList() {
   return (
     <div className="flex flex-col w-full space-y-4">
       <Logo />
-      <Header setSelectCate={setSelectCate} />
+      <Header setSelectCate={setSelectCate} setSearchKeyword={setSearchKeyword}/>
 
       <div className="flex w-full h-36  bg-neutral-200/65 rounded-lg items-center justify-center">
         <div className="font-bold text-2xl">BCTO에 대한 모든 이야기</div>
       </div>
+
       {totalElement <= 0 ? (
         <></>
       ) : (

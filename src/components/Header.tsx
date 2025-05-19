@@ -2,11 +2,7 @@ import { useEffect, useState } from "react";
 import SearchBar from "./SearchBar";
 import { fetchCategory } from "../api/post";
 
-interface HeaderProps {
-  setSelectCate: (category: string) => void;
-}
-
-export default function Header({ setSelectCate }: HeaderProps) {
+export default function Header({ setSelectCate, setSearchKeyword }) {
   const [cateList, setCatelist] = useState(["전체"]);
   const [activeTab, setActiveTab] = useState("전체");
   const [cateText, setCateText] = useState<
@@ -58,7 +54,7 @@ export default function Header({ setSelectCate }: HeaderProps) {
         ))}
       </div>
       <div className="flex">
-        <SearchBar />
+        <SearchBar setSearchKeyword={setSearchKeyword} />
       </div>
     </div>
   );

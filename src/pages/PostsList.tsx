@@ -51,6 +51,7 @@ export default function PostsList() {
     <div className="flex flex-col w-full space-y-4">
       <Logo />
       <Header setSelectCate={setSelectCate} />
+
       <div className="flex w-full h-36  bg-neutral-200/65 rounded-lg items-center justify-center">
         <div className="font-bold text-2xl">BCTO에 대한 모든 이야기</div>
       </div>

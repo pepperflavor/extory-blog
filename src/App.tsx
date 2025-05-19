@@ -1,20 +1,18 @@
-import { useEffect } from "react";
 import "./App.css";
-import PostsList from "./pages/PostsList";
-import { fetchCategory } from "./api/post";
+import { BrowserRouter } from "react-router-dom";
+import AppRouter from "./routes/Router";
 
 function App() {
-  useEffect(() => {
-    fetchCategory();
-  }, []);
   return (
-    <div className="flex w-full justify-center h-screen">
-      <div className="flex w-full max-w-[1440px]">
-        <div className="w-[880px] mx-auto">
-          <PostsList></PostsList>
+    <BrowserRouter>
+      <div className="flex w-full justify-center h-screen">
+        <div className="flex w-full max-w-[1440px]">
+          <div className="w-[880px] mx-auto">
+            <AppRouter />
+          </div>
         </div>
       </div>
-    </div>
+    </BrowserRouter>
   );
 }
 

@@ -2,7 +2,11 @@ import { useEffect, useState } from "react";
 import SearchBar from "./SearchBar";
 import { fetchCategory } from "../api/post";
 
-export default function Header({ setSelectCate }) {
+interface HeaderProps {
+  setSelectCate: (category: string) => void;
+}
+
+export default function Header({ setSelectCate }: HeaderProps) {
   const [cateList, setCatelist] = useState(["전체"]);
   const [activeTab, setActiveTab] = useState("전체");
   const [cateText, setCateText] = useState<
@@ -32,7 +36,7 @@ export default function Header({ setSelectCate }) {
       const result = cateText.find(
         (cate) => cate.categoryText === item
       )?.category;
-      setSelectCate(result);
+      setSelectCate(result || "");
     }
   };
 

@@ -2,7 +2,15 @@ import { useEffect, useState } from "react";
 import SearchBar from "./SearchBar";
 import { fetchCategory } from "../api/post";
 
-export default function Header({ setSelectCate, setSearchKeyword }) {
+type HeaderProps = {
+  setSelectCate: (category: string) => void;
+  setSearchKeyword: (keyword: string) => void;
+};
+
+export default function Header({
+  setSelectCate,
+  setSearchKeyword,
+}: HeaderProps) {
   const [cateList, setCatelist] = useState(["전체"]);
   const [activeTab, setActiveTab] = useState("전체");
   const [cateText, setCateText] = useState<
@@ -12,7 +20,8 @@ export default function Header({ setSelectCate, setSearchKeyword }) {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const data = await fetchCategory();
+        const data: { category: string; categoryText: string }[] =
+          await fetchCategory();
         const list = data.map((item) => item.categoryText);
         setCateText(data);
         setCatelist(["전체", ...list]);
@@ -23,7 +32,7 @@ export default function Header({ setSelectCate, setSearchKeyword }) {
     fetchData();
   }, []);
 
-  const handleTabClick = (item) => {
+  const handleTabClick = (item: string) => {
     setActiveTab(item);
     if (item === "전체") {
       setSelectCate("전체");
@@ -39,7 +48,7 @@ export default function Header({ setSelectCate, setSearchKeyword }) {
   return (
     <div className="flex justify-between pb-11">
       <div className="flex gap-9 space-x-4">
-        {cateList.map((item) => (
+        {cateList.map((item: string) => (
           <div
             key={item}
             className={`font-bold text-base cursor-pointer ${

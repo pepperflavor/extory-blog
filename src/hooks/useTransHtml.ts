@@ -7,7 +7,7 @@ import DOMPurify from "dompurify";
  * @returns {string} - 정화된 HTML 문자열
  */
 
-const useTransHtml = (htmlString, cutCount = 3) => {
+const useTransHtml = (htmlString: string, cutCount: number = 3): string => {
   return useMemo(() => {
     if (!htmlString) return "";
 
@@ -15,7 +15,7 @@ const useTransHtml = (htmlString, cutCount = 3) => {
     tempDiv.innerHTML = htmlString;
     const text = tempDiv.textContent || tempDiv.innerText || "";
 
-    const sentences = text.match(/[^\.!\?]+[\.!\?]+/g) || [];
+    const sentences = text.match(/[^.!?]+[.!?]+/g) || [];
 
     const cutText = sentences.slice(0, cutCount).join(" ").trim() + "...";
 

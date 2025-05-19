@@ -20,7 +20,6 @@ export default defineConfig({
       "/api": {
         target: "https://extory.co",
         changeOrigin: true,
-        // rewrite: (path) => path.replace(/^\/api/, ""),
       },
     },
   },

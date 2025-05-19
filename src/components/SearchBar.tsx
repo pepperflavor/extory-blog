@@ -1,13 +1,17 @@
 import { useRef, useState } from "react";
 
-export default function SearchBar({ setSearchKeyword }) {
+interface SearchBarProps {
+  setSearchKeyword: (keyword: string) => void;
+}
+
+export default function SearchBar({ setSearchKeyword }: SearchBarProps) {
   const [isClicked, setIsClicked] = useState(false);
   const [text, setText] = useState("");
   const [isComposing, setIsComposing] = useState(false);
 
-  const inputRef = useRef(null);
+  const inputRef = useRef<HTMLInputElement>(null);
 
-  function changeSearchText(e) {
+  function changeSearchText(e: React.ChangeEvent<HTMLInputElement>) {
     setText(e.target.value);
   }
 
@@ -18,7 +22,7 @@ export default function SearchBar({ setSearchKeyword }) {
     setSearchKeyword(""); // 검색어 초기화
   }
 
-  function handleEnter(e) {
+  function handleEnter(e: React.KeyboardEvent<HTMLInputElement>) {
     console.log("핸들엔터 안 : ");
     if (e.key === "Enter" && !isComposing && text.trim() !== "") {
       console.log("검색어 전송 전 확인 : ", text.trim());

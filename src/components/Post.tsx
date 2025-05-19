@@ -1,7 +1,17 @@
 import useTransHtml from "@/hooks/useTransHtml";
 import { useNavigate } from "react-router-dom";
 
-export default function Post({ postData }) {
+interface PostData {
+  id: number;
+  content: string;
+  categoryText: string;
+  title: string;
+  updatedAt?: string;
+  createdAt: string;
+  tags: string[];
+}
+
+export default function Post({ postData }: { postData: PostData }) {
   const navigate = useNavigate();
 
   const safeHTML = useTransHtml(postData.content, 3);

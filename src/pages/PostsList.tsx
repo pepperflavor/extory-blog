@@ -5,9 +5,20 @@ import Post from "../components/Post";
 import { fetchPosts } from "../api/post";
 import NoResult from "../components/NoResult";
 
+type Post = {
+  id: number;
+  createdAt: string;
+  updatedAt: string;
+  title: string;
+  content: string;
+  category: string;
+  categoryText: string;
+  tags: string[];
+};
+
 export default function PostsList() {
   const [selectCate, setSelectCate] = useState("전체");
-  const [posts, setPosts] = useState([]);
+  const [posts, setPosts] = useState<Post[]>([]);
   const [loading, setLoading] = useState(false);
   const [totalElement, setTotalElement] = useState(0);
 
@@ -45,18 +56,6 @@ export default function PostsList() {
       } catch (error) {
         console.error("게시글 갖고오기 실패 : ", error);
       }
-      // try {
-      //   let data;
-      //   if (selectCate === "전체") {
-      //     data = await fetchPosts();
-      //   } else {
-      //     data = await fetchPosts(1, "", selectCate);
-      //   }
-      //   setPosts(data.contents);
-      //   setTotalElement(data.totalElements);
-      // } catch (error) {
-      //   console.error("게시글 갖고오기 실패 : ", error);
-      // }
     };
     fetchData();
   }, [selectCate, searchKeyword]);
@@ -87,9 +86,6 @@ export default function PostsList() {
           {totalElement <= 0 ? (
             <NoResult />
           ) : (
-            // <div className="flex w-full h-36 bg-neutral-200/65 rounded-lg items-center justify-center">
-            //   <div className="font-bold text-2xl">게시글이 없습니다</div>
-            // </div>
             posts.map((post) => <Post key={post.id} postData={post} />)
           )}
         </>
